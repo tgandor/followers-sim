@@ -41,14 +41,14 @@ class Party(object):
 
             # 2. current target versor
             d = math.hypot(ttx, tty)
-            if d < 1e-12: # too short distance - don't turn nose
+            if d < 1e-12:  # too short distance - don't turn nose
                 return nose
             tx, ty = ttx / d, tty / d
 
             # 3. vector sum
             nx, ny = vx + tx, vy + ty
             d = math.hypot(nx, ny)
-            if d < 1e-12: # probably going opposite distance, turn 90*
+            if d < 1e-12:  # probably going opposite distance, turn 90*
                 return -vy, vx
 
             # 4. new speed versor

@@ -99,6 +99,7 @@ class MainWindow(object):
 
         self.canvas.delete('all')
         self.party.setup()
+        self.person_painters = []
         for p in self.party.persons:
             self.person_painters.append(PersonPainter(self.canvas, p))
         self.prepared = True
