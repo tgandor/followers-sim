@@ -1,4 +1,3 @@
-
 from __future__ import print_function, division, absolute_import
 
 import settings
@@ -17,30 +16,25 @@ class PersonPainter(object):
         self.person = person
         self.oval = None
         self.nose = None
-        self.last_x = None
-        self.last_y = None
         self.update()
 
     def update(self):
         s = settings.get().dot_size
         w = h = settings.get().canvas_size - s
         x, y = w * self.person.x, h * self.person.y
-        if self.oval is None:
-            self.oval = self.canvas.create_oval((x, y, x + s, y+s), fill=color_for_id(self.person.id))
-        else:
-            self.canvas.move(self.oval, x - self.last_x, y - self.last_y)
 
-        cx, cy = x + s/2, y + s/2
+        if self.oval is None:
+            self.oval = self.canvas.create_oval((x, y, x + s, y + s), fill=color_for_id(self.person.id))
+        else:
+            self.canvas.coords(self.oval, x, y, x + s, y + s)
+
+        cx, cy = x + s / 2, y + s / 2
         dx, dy = s * self.person.nose[0], s * self.person.nose[1]
 
-        if self.nose is not None:
-            self.nose = self.canvas.delete(self.nose)
+        if self.nose is None:
+            self.nose = self.canvas.create_line((cx, cy, cx + dx, cy + dy))
         else:
-            self.nose = self.canvas.create_line((cx, cy, cx+dx, cy+dy))
-            # turning the line doesn't work
-            # self.canvas.move(self.nose, x - self.last_x, y - self.last_y)
-
-        self.last_x, self.last_y = x, y
+            self.canvas.coords(self.nose, cx, cy, cx + dx, cy + dy)
 
 
 class MainWindow(object):
