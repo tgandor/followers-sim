@@ -5,7 +5,7 @@ class Settings:
 
     @property
     def number_of_people(self):
-        return 20
+        return 32
 
     @property
     def canvas_size(self):
@@ -22,6 +22,11 @@ class Settings:
     @property
     def target_distance_min(self):
         return 0.05
+
+    @property
+    def min_distance_to_other(self):
+        return 0.015
+
 
 # TODO: make modifiable from GUI
 _default = Settings()

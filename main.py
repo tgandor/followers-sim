@@ -62,13 +62,15 @@ class MainWindow(object):
         self.running = False
 
     def _step_simulation(self):
+        if not self.running:
+            return
+
         # only keep running if modifications present
         self.running = self.party.update()
 
-        for p in self.person_painters:
-            p.update()
-
         if self.running:
+            for p in self.person_painters:
+                p.update()
             self.frame.after(50, self._step_simulation)
 
     def stop_simulation(self):

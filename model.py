@@ -69,16 +69,26 @@ class Party(object):
                 # good distance
                 continue
 
-            updated = True
-
             if d < d_min / 2:
                 # too close, switch to reverse gear
-                p.x -= v * vx
-                p.y -= v * vy
+                move_x, move_y = -v * vx, -v * vy
+            else:
+                # standard walk
+                move_x, move_y = v * vx, v * vy
+
+            new_pos_x, new_pos_y = p.x + move_x, p.y + move_y
+
+            # rudimentary collision check
+            min_distance_to_other = min(
+                math.hypot(new_pos_x - op.x, new_pos_y - op.y)
+                for op in self.persons
+                if op.id not in (p.id, p.target)
+            )
+
+            if min_distance_to_other < settings.get().min_distance_to_other:
                 continue
 
-            # standard walk
-            p.x += v * vx
-            p.y += v * vy
+            updated = True
+            p.x, p.y = new_pos_x, new_pos_y
 
         return updated
