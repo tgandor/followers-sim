@@ -54,9 +54,11 @@ class Party(object):
             # 4. new speed versor
             return nx / d, ny / d
 
+        def jitter():
+            return random.gauss(0, 0.7) * settings.get().person_speed
+
         v = settings.get().person_speed
         d_min = settings.get().target_distance_min
-
         updated = False
 
         for p in self.persons:
@@ -86,6 +88,9 @@ class Party(object):
             )
 
             if min_distance_to_other < settings.get().min_distance_to_other:
+                if settings.get().jitter:
+                    p.x, p.y = p.x - move_x / 2 + jitter(), p.y - move_y / 2 + jitter()
+                    updated = True
                 continue
 
             updated = True

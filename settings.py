@@ -2,6 +2,15 @@ class Settings:
     """
     Settings for the Followers application.
     """
+    _jitter = False
+
+    @property
+    def jitter(self):
+        return self._jitter
+
+    @jitter.setter
+    def jitter(self, value):
+        self._jitter = bool(value)
 
     @property
     def number_of_people(self):
@@ -28,7 +37,7 @@ class Settings:
         return 0.015
 
 
-# TODO: make modifiable from GUI
+# TODO: make more properties modifiable from GUI?
 _default = Settings()
 
 

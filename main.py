@@ -38,6 +38,9 @@ class PersonPainter(object):
 
 
 class MainWindow(object):
+    def _on_jitter(self):
+        settings.get().jitter = self.jitter.get()
+
     def __init__(self, parent):
         # GUI init
         self.parent = parent
@@ -51,6 +54,12 @@ class MainWindow(object):
         tkinter.Button(self.frame, text='Prepare', command=self.setup_simulation).pack(fill='x')
         tkinter.Button(self.frame, text='Start', command=self.start_simulation).pack(fill='x')
         tkinter.Button(self.frame, text='Stop', command=self.stop_simulation).pack(fill='x')
+
+        self.jitter = tkinter.IntVar(self.frame, value=0)
+        tkinter.Checkbutton(
+            self.frame, text='Enable jitter', variable=self.jitter, command=self._on_jitter
+        ).pack(fill='x')
+
         self.parent.resizable(width=tkinter.FALSE, height=tkinter.FALSE)
 
         # create model
